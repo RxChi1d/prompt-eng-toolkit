@@ -75,29 +75,29 @@ The skills are then loaded by Codex's progressive-disclosure scanner. No SKILL.m
 
 ### OpenCode
 
-OpenCode auto-discovers any `.opencode/skills/<name>/SKILL.md` (and, via its Claude Code compatibility layer, `.claude/skills/<name>/SKILL.md`). It has no marketplace concept; install is a clone + symlink.
+OpenCode has no marketplace concept — but its agent can self-install. Paste this into your OpenCode session:
 
-**Per-project install:**
+> Please follow the install instructions at https://raw.githubusercontent.com/RxChi1d/prompt-eng-toolkit/main/install/opencode.md
 
-```bash
-git clone https://github.com/RxChi1d/prompt-eng-toolkit ~/.local/share/prompt-eng-toolkit
-mkdir -p .opencode
-ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/skills .opencode/skills
-ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/shared .opencode/shared
-```
+The agent will fetch the file, ask whether you want per-project or global scope, run the install, and verify it. Update later with the same prompt; it's idempotent.
 
-**Global install (all OpenCode projects):**
+**Manual install** (if you prefer not to delegate):
 
 ```bash
+# Clone once
 git clone https://github.com/RxChi1d/prompt-eng-toolkit ~/.local/share/prompt-eng-toolkit
-mkdir -p ~/.config/opencode
-ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/skills ~/.config/opencode/skills
-ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/shared ~/.config/opencode/shared
+
+# Pick scope
+TARGET="$HOME/.config/opencode"        # global
+# TARGET="$(pwd)/.opencode"            # per-project
+
+# Symlink skills + shared into the same parent (both required)
+mkdir -p "$TARGET"
+ln -sfn ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/skills "$TARGET/skills"
+ln -sfn ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/shared "$TARGET/shared"
 ```
 
-Both `skills/` and `shared/` must symlink into the same parent so the SKILL.md `../../shared/...` relative paths resolve.
-
-Update with `git -C ~/.local/share/prompt-eng-toolkit pull`.
+Both `skills/` and `shared/` must sit in the same parent so the SKILL.md `../../shared/...` paths resolve. Update with `git -C ~/.local/share/prompt-eng-toolkit pull`.
 
 ---
 
