@@ -53,33 +53,42 @@ plugins/prompt-eng-toolkit/
 
 The plugin works in three agentic CLIs. Pick the section for your tool.
 
-### Claude Code
+### Claude Code (CLI, no TUI required)
 
-```
-/plugin marketplace add RxChi1d/prompt-eng-toolkit
-/plugin install prompt-eng-toolkit@prompt-eng-toolkit
-```
-
-Both skills auto-register. Trigger naturally — "help me write a system prompt for X" picks up `prompt-create`; "this prompt is too long" picks up `prompt-optimize`.
-
-### Codex CLI
-
-The repo ships canonical Codex manifests at `.agents/plugins/marketplace.json` and `plugins/prompt-eng-toolkit/.codex-plugin/plugin.json` alongside the Claude Code ones, so the same source works in both.
+Run from any shell:
 
 ```bash
-codex plugin marketplace add RxChi1d/prompt-eng-toolkit
-codex plugin install prompt-eng-toolkit --source prompt-eng-toolkit
+claude plugin marketplace add RxChi1d/prompt-eng-toolkit
+claude plugin install prompt-eng-toolkit@prompt-eng-toolkit
 ```
 
-The skills are then loaded by Codex's progressive-disclosure scanner. No SKILL.md edits needed — the file format is identical to Claude Code's.
+The same commands also work as slash commands inside a Claude Code session (`/plugin marketplace add ...` / `/plugin install ...`) if you prefer.
 
-### OpenCode
+### Codex CLI (CLI add, then TUI install)
 
-OpenCode has no marketplace concept — but its agent can self-install. Paste this into your OpenCode session:
+Codex's CLI only handles marketplace registration; the actual install is a TUI action.
+
+```bash
+# 1. Register the marketplace from your shell
+codex plugin marketplace add RxChi1d/prompt-eng-toolkit
+```
+
+```
+# 2. Open the TUI and install the plugin
+codex
+# inside Codex: type /plugins → switch to the prompt-eng-toolkit tab
+#               (or search "prompt" in All Plugins) → press Enter to install
+```
+
+If the marketplace was added before this commit and the plugin doesn't appear, run `codex plugin marketplace remove prompt-eng-toolkit` then `add` again to force a fresh parse.
+
+### OpenCode (agent auto-install)
+
+OpenCode has no marketplace mechanism. Easiest path: ask the OpenCode agent to install it for you. In your OpenCode session, paste:
 
 > Please follow the install instructions at https://raw.githubusercontent.com/RxChi1d/prompt-eng-toolkit/main/install/opencode.md
 
-The agent will fetch the file, ask whether you want per-project or global scope, run the install, and verify it. Update later with the same prompt; it's idempotent.
+The agent fetches the install guide, asks whether you want **per-project** or **global** scope, clones the repo to `~/.local/share/prompt-eng-toolkit`, creates the required symlinks, verifies the install, and reports back. Re-running the same prompt later updates the install (idempotent).
 
 **Manual install** (if you prefer not to delegate):
 
