@@ -53,7 +53,7 @@ plugins/prompt-eng-toolkit/
 
 ```bash
 # Add the marketplace (single command — only needed once)
-/plugin marketplace add rxchi1d/prompt-eng-toolkit
+/plugin marketplace add RxChi1d/prompt-eng-toolkit
 
 # Install the plugin
 /plugin install prompt-eng-toolkit@prompt-eng-toolkit

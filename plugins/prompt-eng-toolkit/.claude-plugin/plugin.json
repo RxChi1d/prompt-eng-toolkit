@@ -6,8 +6,8 @@
     "name": "rxchi1d",
     "email": "openai@rxchi1d.me"
   },
-  "homepage": "https://github.com/rxchi1d/prompt-eng-toolkit",
-  "repository": "https://github.com/rxchi1d/prompt-eng-toolkit",
+  "homepage": "https://github.com/RxChi1d/prompt-eng-toolkit",
+  "repository": "https://github.com/RxChi1d/prompt-eng-toolkit",
   "license": "MIT",
   "keywords": ["prompt-engineering", "system-prompt", "injection-defense", "token-optimization", "multi-provider"]
 }
