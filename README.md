@@ -51,17 +51,59 @@ plugins/prompt-eng-toolkit/
 
 ## Install
 
-```bash
-# Add the marketplace (single command — only needed once)
-/plugin marketplace add RxChi1d/prompt-eng-toolkit
+The plugin works in three agentic CLIs. Pick the section for your tool.
 
-# Install the plugin
+### Claude Code
+
+```
+/plugin marketplace add RxChi1d/prompt-eng-toolkit
 /plugin install prompt-eng-toolkit@prompt-eng-toolkit
 ```
 
-After install both skills are auto-loaded into your Claude Code session. Trigger them naturally:
-- "Help me write a system prompt for X" → `prompt-create` activates
-- "This prompt is too long, can we tighten it?" → `prompt-optimize` activates
+Both skills auto-register. Trigger naturally — "help me write a system prompt for X" picks up `prompt-create`; "this prompt is too long" picks up `prompt-optimize`.
+
+### Codex CLI
+
+The repo ships canonical Codex manifests at `.agents/plugins/marketplace.json` and `plugins/prompt-eng-toolkit/.codex-plugin/plugin.json` alongside the Claude Code ones, so the same source works in both.
+
+```bash
+codex plugin marketplace add RxChi1d/prompt-eng-toolkit
+codex plugin install prompt-eng-toolkit --source prompt-eng-toolkit
+```
+
+The skills are then loaded by Codex's progressive-disclosure scanner. No SKILL.md edits needed — the file format is identical to Claude Code's.
+
+### OpenCode
+
+OpenCode auto-discovers any `.opencode/skills/<name>/SKILL.md` (and, via its Claude Code compatibility layer, `.claude/skills/<name>/SKILL.md`). It has no marketplace concept; install is a clone + symlink.
+
+**Per-project install:**
+
+```bash
+git clone https://github.com/RxChi1d/prompt-eng-toolkit ~/.local/share/prompt-eng-toolkit
+mkdir -p .opencode
+ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/skills .opencode/skills
+ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/shared .opencode/shared
+```
+
+**Global install (all OpenCode projects):**
+
+```bash
+git clone https://github.com/RxChi1d/prompt-eng-toolkit ~/.local/share/prompt-eng-toolkit
+mkdir -p ~/.config/opencode
+ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/skills ~/.config/opencode/skills
+ln -s ~/.local/share/prompt-eng-toolkit/plugins/prompt-eng-toolkit/shared ~/.config/opencode/shared
+```
+
+Both `skills/` and `shared/` must symlink into the same parent so the SKILL.md `../../shared/...` relative paths resolve.
+
+Update with `git -C ~/.local/share/prompt-eng-toolkit pull`.
+
+---
+
+After install (any tool), trigger the skills naturally:
+- "Help me write a system prompt for X" → `prompt-create`
+- "This prompt is too long, can we tighten it?" → `prompt-optimize`
 
 ## Use
 
@@ -88,20 +130,18 @@ Keys are **never** written to any file (skill, source, scratch, log). If keys ar
 
 ## Counting tokens manually
 
+The token counter is at `<plugin-root>/shared/scripts/count_tokens.py` (substitute the absolute path your tool installed it to):
+
 ```bash
 # Single file
-${CLAUDE_PLUGIN_ROOT}/shared/scripts/count_tokens.py \
-  --provider gemini --model gemini-2.5-flash \
-  --file my_prompt.txt
+count_tokens.py --provider gemini --model gemini-2.5-flash --file my_prompt.txt
 
 # Before / after diff
-${CLAUDE_PLUGIN_ROOT}/shared/scripts/count_tokens.py \
-  --provider anthropic --model claude-sonnet-4-5 \
+count_tokens.py --provider anthropic --model claude-sonnet-4-5 \
   --before old.txt --after new.txt --label "system prompt"
 
 # Multi-segment markdown table
-${CLAUDE_PLUGIN_ROOT}/shared/scripts/count_tokens.py \
-  --provider openai --model gpt-5 \
+count_tokens.py --provider openai --model gpt-5 \
   --pair "system:old_sys.txt:new_sys.txt" \
   --pair "user:old_usr.txt:new_usr.txt"
 ```
@@ -120,8 +160,14 @@ Counts go through the **official provider countTokens API** (or local tiktoken f
 
 ## Compatibility
 
-- Claude Code 2.x with plugins enabled
-- Python 3.9+ for the token counter (urllib only, no required pip deps; tiktoken optional for OpenAI offline counting)
+| Tool | Status | Discovery path used |
+|---|---|---|
+| Claude Code 2.x with plugins enabled | ✅ canonical | `.claude-plugin/marketplace.json` + `.claude-plugin/plugin.json` |
+| Codex CLI (Rust rewrite, 2026+) | ✅ canonical | `.agents/plugins/marketplace.json` + `.codex-plugin/plugin.json` |
+| OpenCode (sst/opencode) | ✅ via clone + symlink | `.opencode/skills/...` (or `.claude/skills/...` via compat layer) |
+| Gemini CLI / Cursor / Aider | ⚠️ untested — likely works for the SKILL.md content if their loader supports the agents.md skill convention; manifest needs adapting |
+
+Token counter requires Python 3.9+ (urllib only; `tiktoken` optional for OpenAI offline counting).
 
 ## License
 

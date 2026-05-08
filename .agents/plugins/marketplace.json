@@ -1,0 +1,16 @@
+{
+  "name": "prompt-eng-toolkit",
+  "interface": {
+    "displayName": "prompt-eng-toolkit",
+    "shortDescription": "Defense-first workflow for designing and compressing production single-turn LLM system prompts."
+  },
+  "plugins": [
+    {
+      "name": "prompt-eng-toolkit",
+      "source": {
+        "type": "local",
+        "path": "./plugins/prompt-eng-toolkit"
+      }
+    }
+  ]
+}

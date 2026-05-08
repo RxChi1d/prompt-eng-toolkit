@@ -29,7 +29,7 @@ Before changing anything, extract:
 
 ### Step 2 — Baseline measurement
 
-Run `${CLAUDE_PLUGIN_ROOT}/shared/scripts/count_tokens.py` to get the current token count. Record:
+Run `../../shared/scripts/count_tokens.py` to get the current token count. Record:
 - prompt token count (per-segment if segments exist)
 - output token count from a representative call (with-API mode)
 - failure modes observed
@@ -46,7 +46,7 @@ Same flow as `prompt-create` Step 2. Check env vars first; if no key found, **as
 
 ### Step 4 — Apply compression in priority order
 
-Read `${CLAUDE_PLUGIN_ROOT}/shared/references/optimization-playbook.md` for full patterns. Summary of the priority ladder (compress in this order; stop when budget met):
+Read `../../shared/references/optimization-playbook.md` for full patterns. Summary of the priority ladder (compress in this order; stop when budget met):
 
 | Priority | Target | Why first |
 |---|---|---|
@@ -84,11 +84,11 @@ write_to_destination(draft)      # only after the loop terminates
 
 #### Theory-only mode
 
-Walk the optimization checklist below + the universal-principles checklist (`${CLAUDE_PLUGIN_ROOT}/shared/references/universal-principles.md` §四). Be explicit about "static review only" in your summary.
+Walk the optimization checklist below + the universal-principles checklist (`../../shared/references/universal-principles.md` §四). Be explicit about "static review only" in your summary.
 
 ### Step 6 — Re-measure and produce comparison table
 
-Re-run `${CLAUDE_PLUGIN_ROOT}/shared/scripts/count_tokens.py` and produce a before/after table. Use the generic format below — **do not assume the prompt has separate system/user halves**, since many users pass everything as one blob:
+Re-run `../../shared/scripts/count_tokens.py` and produce a before/after table. Use the generic format below — **do not assume the prompt has separate system/user halves**, since many users pass everything as one blob:
 
 ```markdown
 | Segment            | Before (tokens) | After (tokens) | Δ tokens | Δ % |
@@ -128,16 +128,16 @@ Provide:
 
 ## Reference index
 
-Read these on demand:
+Paths below are relative to this `SKILL.md`'s directory. `../../` resolves to the plugin root, where `shared/` lives. Read on demand:
 
 | Question | File |
 |---|---|
-| What compression patterns are high-ROI vs high-risk? | `${CLAUDE_PLUGIN_ROOT}/shared/references/optimization-playbook.md` |
-| What attack patterns must the prompt still survive after compression? | `${CLAUDE_PLUGIN_ROOT}/shared/references/failure-modes-and-defenses.md` |
-| What's the universal best-practice checklist? | `${CLAUDE_PLUGIN_ROOT}/shared/references/universal-principles.md` |
-| What does the v4 template look like (target structure if rewriting)? | `${CLAUDE_PLUGIN_ROOT}/shared/references/v4-template.md` |
-| How do I shape attack fixtures for my domain? | `${CLAUDE_PLUGIN_ROOT}/shared/fixtures/attack-tests-template.yaml` |
-| How do I count tokens with the official provider API? | `${CLAUDE_PLUGIN_ROOT}/shared/scripts/count_tokens.py --help` |
+| What compression patterns are high-ROI vs high-risk? | `../../shared/references/optimization-playbook.md` |
+| What attack patterns must the prompt still survive after compression? | `../../shared/references/failure-modes-and-defenses.md` |
+| What's the universal best-practice checklist? | `../../shared/references/universal-principles.md` |
+| What does the v4 template look like (target structure if rewriting)? | `../../shared/references/v4-template.md` |
+| How do I shape attack fixtures for my domain? | `../../shared/fixtures/attack-tests-template.yaml` |
+| How do I count tokens with the official provider API? | `../../shared/scripts/count_tokens.py --help` |
 
 ## Anti-patterns (from playbook §六)
 

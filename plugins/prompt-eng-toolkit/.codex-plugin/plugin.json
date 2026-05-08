@@ -1,0 +1,12 @@
+{
+  "name": "prompt-eng-toolkit",
+  "version": "0.1.0",
+  "description": "Defense-first workflow for designing and compressing production single-turn LLM system prompts. Includes prompt-create and prompt-optimize skills, shared multi-provider references, a generic token counter, and an attack-fixture template.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "prompt-eng-toolkit",
+    "shortDescription": "Design and compress production single-turn LLM system prompts.",
+    "category": "ai-engineering",
+    "capabilities": ["skills"]
+  }
+}
