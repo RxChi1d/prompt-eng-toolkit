@@ -1,0 +1,25 @@
+{
+  "name": "prompt-eng-toolkit",
+  "owner": {
+    "name": "rxchi1d",
+    "email": "openai@rxchi1d.me"
+  },
+  "description": "Defense-first workflow for designing and compressing production single-turn LLM system prompts.",
+  "plugins": [
+    {
+      "name": "prompt-eng-toolkit",
+      "source": "./plugins/prompt-eng-toolkit",
+      "description": "Two skills (prompt-create, prompt-optimize) for engineering production single-turn LLM system prompts. Multi-provider (Gemini 3 / Claude 4.5+ / GPT-5) doc consensus, iterative API testing with theory-only fallback, before/after token comparison, built-in injection-defense fixtures.",
+      "version": "0.1.0",
+      "author": {
+        "name": "rxchi1d",
+        "email": "openai@rxchi1d.me"
+      },
+      "homepage": "https://github.com/rxchi1d/prompt-eng-toolkit",
+      "repository": "https://github.com/rxchi1d/prompt-eng-toolkit",
+      "license": "MIT",
+      "keywords": ["prompt-engineering", "system-prompt", "injection-defense", "token-optimization", "multi-provider", "gemini", "claude", "openai"],
+      "category": "ai-engineering"
+    }
+  ]
+}

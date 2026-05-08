@@ -1,0 +1,13 @@
+{
+  "name": "prompt-eng-toolkit",
+  "description": "Defense-first workflow for designing and compressing production single-turn LLM system prompts. Includes prompt-create and prompt-optimize skills, shared multi-provider references, a generic token counter, and an attack-fixture template.",
+  "version": "0.1.0",
+  "author": {
+    "name": "rxchi1d",
+    "email": "openai@rxchi1d.me"
+  },
+  "homepage": "https://github.com/rxchi1d/prompt-eng-toolkit",
+  "repository": "https://github.com/rxchi1d/prompt-eng-toolkit",
+  "license": "MIT",
+  "keywords": ["prompt-engineering", "system-prompt", "injection-defense", "token-optimization", "multi-provider"]
+}
