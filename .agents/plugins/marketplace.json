@@ -7,10 +7,7 @@
   "plugins": [
     {
       "name": "prompt-eng-toolkit",
-      "source": {
-        "type": "local",
-        "path": "./plugins/prompt-eng-toolkit"
-      }
+      "source": "./plugins/prompt-eng-toolkit"
     }
   ]
 }
